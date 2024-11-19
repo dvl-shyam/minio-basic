@@ -4,6 +4,13 @@ Install dependencies
 ```
 
 ```bash
+Set the Environment Variables
+ENDPOINT="localhost:{PORT}"
+SECRET_KEY=""
+ACCESS_KEY=""
+```
+
+```bash
 Run minio Server
 '.\minio.exe server {Path/To/Minio.exe} --console-address :9001'
 ```
