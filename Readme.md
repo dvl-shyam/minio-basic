@@ -1,11 +1,16 @@
 ```bash
 Install dependencies
-curl 'go mod tidy'
+'go mod tidy'
+```
+
+```bash
+Run minio Server
+'.\minio.exe server {Path/To/Minio.exe} --console-address :9001'
 ```
 
 ```bash
 Run the Code
-curl 'go run main.go'
+'go run main.go'
 ```
 
 ```bash
@@ -15,22 +20,22 @@ curl --location --request POST 'http://localhost:8000/bucket/create/{bucketname}
 
 ```bash
 List bucket
-curl --location 'http://localhost:8000/bucket/list'
+curl --location --request GET 'http://localhost:8000/bucket/list'
 ```
 
 ```bash
 Put Object
-curl --location 'http://localhost:8000/object/upload/{BucketName}/{FileName}' \
---header 'Content-Type: text/plain' \
+curl --location --request POST 'http://localhost:8000/object/upload/{BucketName}/{FileName}'
+--header 'Content-Type: text/plain'
 --data-binary '@/C:/Users/ShyamKuntal/Desktop/ss.txt'
 ```
 
 ```bash
 Get Object
-curl --location 'http://localhost:8000/object/download/{BucketName}/{FileName}'
+curl --location --request GET 'http://localhost:8000/object/download/{BucketName}/{FileName}'
 ```
 
 ```bash
 DELETE Object
-curl --location 'http://localhost:8000/object/delete/{BucketName}/{FileName}'
+curl --location --request DELETE 'http://localhost:8000/object/delete/{BucketName}/{FileName}'
 ```

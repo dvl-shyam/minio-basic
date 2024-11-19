@@ -32,7 +32,6 @@ func getPathParam(url string, prefix string) (string, error) {
 	return strings.TrimPrefix(url, prefix), nil
 }
 
-// create bucket
 func createBucketHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("bucketName")
 	bucketName, err := getPathParam(r.URL.Path, "/bucket/create/")
@@ -49,7 +48,6 @@ func createBucketHandler(w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, http.StatusOK, "Bucket created successfully", nil)
 }
 
-// list all buckets
 func listBucketsHandler(w http.ResponseWriter, r *http.Request) {
 	buckets, err := minioClient.ListBuckets(context.Background())
 	if err != nil {
@@ -60,36 +58,6 @@ func listBucketsHandler(w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, http.StatusOK, "Buckets listed successfully", buckets)
 }
 
-// upload file
-// func uploadFileHandler(w http.ResponseWriter, r *http.Request) {
-// 	params, err := getPathParam(r.URL.Path, "/object/upload/")
-// 	if err != nil {
-// 		respondJSON(w, http.StatusBadRequest, err.Error(), nil)
-// 		return
-// 	}
-// 	parts := strings.SplitN(params, "/", 2)
-// 	if len(parts) < 2 {
-// 		respondJSON(w, http.StatusBadRequest, "URL must include bucketName/objectName", nil)
-// 		return
-// 	}
-// 	bucketName := parts[0]
-// 	objectName := parts[1]
-// 	fmt.Println(bucketName, objectName)
-
-// 	//file path is provided in the body
-// 	filePath := r.URL.Query().Get("filePath")
-// 	if filePath == "" {
-// 		respondJSON(w, http.StatusBadRequest, "filePath is required", nil)
-// 		return
-// 	}
-
-// 	_, err = minioClient.FPutObject(context.Background(), bucketName, objectName, filePath, minio.PutObjectOptions{})
-// 	if err != nil {
-// 		respondJSON(w, http.StatusInternalServerError, "Error uploading file", err.Error())
-// 		return
-// 	}
-// 	respondJSON(w, http.StatusOK, "File uploaded successfully", nil)
-// }
 func uploadFileHandler(w http.ResponseWriter, r *http.Request) {
 	params, err := getPathParam(r.URL.Path, "/object/upload/")
 	if err != nil {
@@ -115,7 +83,6 @@ func uploadFileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Respond with success
 	response := map[string]interface{}{
 		"message":     "File uploaded successfully",
 		"bucketName":  bucketName,
@@ -126,35 +93,6 @@ func uploadFileHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-// Handler to list objects in a bucket
-// func listObjectsHandler(w http.ResponseWriter, r *http.Request) {
-// 	if r.Method != http.MethodGet {
-// 		respondJSON(w, http.StatusMethodNotAllowed, "Method not allowed", nil)
-// 		return
-// 	}
-
-// 	bucketName, err := getPathParam(r.URL.Path, "/object/list/")
-// 	if err != nil {
-// 		respondJSON(w, http.StatusBadRequest, err.Error(), nil)
-// 		return
-// 	}
-
-// 	objectCh := minioClient.ListObjects(context.Background(), bucketName, minio.ListObjectsOptions{
-// 		Recursive: true,
-// 	})
-
-// 	objects := []string{}
-// 	for object := range objectCh {
-// 		if object.Err != nil {
-// 			respondJSON(w, http.StatusInternalServerError, "Error listing objects", object.Err.Error())
-// 			return
-// 		}
-// 		objects = append(objects, object.Key)
-// 	}
-// 	respondJSON(w, http.StatusOK, "Objects listed successfully", objects)
-// }
-
-// Handler to download an object
 func downloadObjectHandler(w http.ResponseWriter, r *http.Request) {
 
 	params, err := getPathParam(r.URL.Path, "/object/download/")
@@ -186,7 +124,6 @@ func downloadObjectHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// delete object
 func deleteObjectHandler(w http.ResponseWriter, r *http.Request) {
 
 	params, err := getPathParam(r.URL.Path, "/object/delete/")
