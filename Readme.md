@@ -1,48 +1,60 @@
-```bash
+# Minio - Basic Setup
+
+## API Requests
+
+
 Install dependencies
+```bash
 'go mod tidy'
 ```
 
-```bash
+
 Set the Environment Variables
+```bash
 ENDPOINT="localhost:{PORT}"
 SECRET_KEY=""
 ACCESS_KEY=""
 ```
 
-```bash
+
 Run minio Server
+```bash
 '.\minio.exe server {Path/To/Minio.exe} --console-address :9001'
 ```
 
-```bash
+
 Run the Code
+```bash
 'go run main.go'
 ```
 
-```bash
+
 create bucket
+```bash
 curl --location --request POST 'http://localhost:8000/bucket/create/{bucketname}'
 ```
 
-```bash
 List bucket
+```bash
 curl --location --request GET 'http://localhost:8000/bucket/list'
 ```
 
-```bash
+
 Put Object
+```bash
 curl --location --request POST 'http://localhost:8000/object/upload/{BucketName}/{FileName}'
 --header 'Content-Type: text/plain'
 --data-binary '@/C:/Users/ShyamKuntal/Desktop/ss.txt'
 ```
 
-```bash
+
 Get Object
+```bash
 curl --location --request GET 'http://localhost:8000/object/download/{BucketName}/{FileName}'
 ```
 
-```bash
+
 DELETE Object
+```bash
 curl --location --request DELETE 'http://localhost:8000/object/delete/{BucketName}/{FileName}'
 ```
